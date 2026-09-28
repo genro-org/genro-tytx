@@ -16,7 +16,7 @@
 
 import { toTytx } from './encode.js';
 import { fromTytx } from './decode.js';
-import { NodeDOMParser, NodeXMLSerializer } from '#dependencies';
+import { NodeDOMParser, NodeXMLSerializer } from './platform/dependencies.js';
 
 // XML DOM support - use @xmldom/xmldom for Node.js
 let DOMParser, XMLSerializer;

@@ -1,3 +1,4 @@
+/* @ts-self-types="./index.d.ts" */
 // Copyright 2025 Softwell S.r.l. - Licensed under Apache License 2.0
 /**
  * TYTX Base - Typed Text Protocol for Scalar Types

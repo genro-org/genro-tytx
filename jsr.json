@@ -1,0 +1,16 @@
+{
+  "name": "@genro/tytx",
+  "version": "0.16.0",
+  "license": "Apache-2.0",
+  "exports": "./js/src/index.js",
+  "publish": {
+    "include": [
+      "js/src/**/*.js",
+      "package.json",
+      "js/package.json",
+      "README.md",
+      "LICENSE",
+      "js/src/**/*.d.ts"
+    ]
+  }
+}

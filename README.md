@@ -4,7 +4,7 @@
 
 <p align="center">
   <a href="https://pypi.org/project/genro-tytx/"><img src="https://img.shields.io/pypi/v/genro-tytx?color=blue" alt="PyPI"></a>
-  <a href="https://www.npmjs.com/package/genro-tytx"><img src="https://img.shields.io/npm/v/genro-tytx?color=red" alt="npm"></a>
+  <a href="https://jsr.io/@genro/tytx"><img src="https://jsr.io/badges/@genro/tytx" alt="JSR"></a>
   <img src="https://img.shields.io/badge/python-3.10%2B-blue" alt="Python 3.10+">
   <a href="https://github.com/genropy/genro-tytx/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-Apache%202.0-green" alt="License"></a>
   <img src="https://img.shields.io/badge/status-beta-yellow" alt="Status">
@@ -88,11 +88,11 @@ decoded = from_tytx(encoded)
 **JavaScript:**
 
 ```bash
-npm install genro-tytx big.js
+bunx jsr add @genro/tytx
 ```
 
 ```javascript
-import { fetchTytx } from 'genro-tytx';
+import { fetchTytx } from '@genro/tytx';
 import Big from 'big.js';
 
 const result = await fetchTytx('/api/invoice', {
@@ -156,12 +156,12 @@ The concrete class of a subclass is the type's own business. TYTX keeps one subt
 pip install genro-tytx
 
 # JavaScript/TypeScript
-npm install genro-tytx
-
-# Recommended: decimal library for JS
-npm install big.js  # lightweight, good for most cases
-# or: npm install decimal.js  # more features
+bunx jsr add @genro/tytx
+# With npm: npx jsr add @genro/tytx
 ```
+
+JavaScript includes Decimal, Big, MessagePack and XML dependencies. No separate
+codec installation is needed. Python extras remain unchanged.
 
 ## Real-World Example: Order Processing
 
@@ -268,7 +268,7 @@ async def handle_order(request: Request):
 ### 3. ✅ WITH TYTX: Zero Conversions
 
 ```javascript
-import { fetchTytx } from 'genro-tytx';
+import { fetchTytx } from '@genro/tytx';
 
 const result = await fetchTytx('/api/process_order', { body: orderData });
 console.log(result.total.toFixed(2));  // Big, ready to use

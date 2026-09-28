@@ -25,8 +25,8 @@ const time = (h, m, s = 0, ms = 0) => new Date(Date.UTC(1970, 0, 1, h, m, s, ms)
 const datetime = (y, mo, d, h = 0, m = 0, s = 0, ms = 1) =>
     new Date(Date.UTC(y, mo - 1, d, h, m, s, ms));
 
-const PYTHON_SERVER_PORT = 3457;
-const PYTHON_SERVER_URL = `http://127.0.0.1:${PYTHON_SERVER_PORT}/echo`;
+const PYTHON_SERVER_PORT = 0;
+let PYTHON_SERVER_URL;
 
 const HTTP_TRANSPORTS = ['json', 'xml', 'msgpack'];
 
@@ -223,6 +223,21 @@ describe('TestHTTPCrossLanguageRoundtrip (JS → Python → JS)', () => {
             stdio: ['ignore', 'pipe', 'pipe'],
         });
 
+        // Read the ephemeral port and preserve startup diagnostics.
+        const port = await new Promise((resolve, reject) => {
+            let output = '';
+            let errors = '';
+            const timeout = setTimeout(() => { pythonServer.kill(); reject(new Error(`Python startup timeout: ${errors}`)); }, 5000);
+            pythonServer.stderr.on('data', data => { errors += data; });
+            pythonServer.once('error', error => { clearTimeout(timeout); reject(error); });
+            pythonServer.once('exit', code => { clearTimeout(timeout); reject(new Error(`Python exited (${code}): ${errors}`)); });
+            pythonServer.stdout.on('data', data => {
+                output += data;
+                const match = output.match(/Echo server listening on port (\d+)/);
+                if (match) { clearTimeout(timeout); resolve(Number(match[1])); }
+            });
+        });
+        PYTHON_SERVER_URL = `http://127.0.0.1:${port}/echo`;
         // Wait for server to start
         const ready = await waitForServer(PYTHON_SERVER_URL);
         if (!ready) {
