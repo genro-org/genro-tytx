@@ -31,4 +31,8 @@ export interface RegisteredClass<T extends { toTytx(): string }> {
 }
 export function registerClass<T extends { toTytx(): string }, C extends RegisteredClass<T>>(cls: C): C;
 export function getRegisteredType(suffix: string): Function | null;
+/** Stores the subtype dictionary of a suffix, replacing the previous one. */
+export function setSubtypeDict(suffix: string, subtypes: Record<string, unknown>): void;
+/** Returns the subtype dictionary of a suffix, or {} if none was set. */
+export function getSubtypeDict(suffix: string): Record<string, unknown>;
 export const __version__: string;
