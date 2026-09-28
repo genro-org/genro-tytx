@@ -3,9 +3,14 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import { pathToFileURL } from 'node:url';
 import { build } from 'esbuild';
+import { mkdtemp, realpath, rm } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 
-test('browser bundle provides JSON and MessagePack registered-type codecs without Node shims', async () => {
-    const outfile = `/tmp/tytx-browser-${process.pid}-${Date.now()}.mjs`;
+test('browser bundle provides JSON and MessagePack registered-type codecs without Node shims', async (t) => {
+    const directory = await mkdtemp(join(await realpath(tmpdir()), 'tytx-browser-'));
+    t.after(() => rm(directory, {recursive: true, force: true}));
+    const outfile = join(directory, 'bundle.mjs');
     await build({
         entryPoints: [new URL('../src/index.js', import.meta.url).pathname],
         bundle: true,

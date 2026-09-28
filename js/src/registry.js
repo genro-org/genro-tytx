@@ -7,7 +7,7 @@
  */
 
 import { fromQs } from './qs.js';
-import { BigJS, DecimalJS } from '#dependencies';
+import { BigJS, DecimalJS } from './platform/dependencies.js';
 
 // =============================================================================
 // DECIMAL LIBRARY DETECTION

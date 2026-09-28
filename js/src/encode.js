@@ -10,7 +10,7 @@ import { toXml } from './xml.js';
 import { toMsgpack } from './msgpack.js';
 import { rawEncode } from './utils.js';
 import { getTypeEntry } from './registry.js';
-import { msgpack } from '#dependencies';
+import { msgpack } from './platform/dependencies.js';
 
 /**
  * Pre-process a value recursively, converting typed values to TYTX strings.

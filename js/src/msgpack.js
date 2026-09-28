@@ -19,7 +19,7 @@ import {
     getCustomTypeEntry,
     SUFFIX_TO_TYPE,
 } from './registry.js';
-import { msgpack } from '#dependencies';
+import { msgpack } from './platform/dependencies.js';
 
 // Check for @msgpack/msgpack availability
 const HAS_MSGPACK = msgpack !== null;

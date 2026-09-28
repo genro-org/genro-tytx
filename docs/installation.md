@@ -1,5 +1,12 @@
 # Installation
 
+## JavaScript and TypeScript (JSR)
+
+Install `@genro/tytx` with `bunx jsr add @genro/tytx` or
+`npx jsr add @genro/tytx`. Import from `@genro/tytx`. The JavaScript
+package includes all Decimal, Big, MessagePack and XML dependencies.
+The optional-dependency instructions below apply to Python.
+
 ## Requirements
 
 - Python 3.10 or higher

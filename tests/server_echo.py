@@ -98,7 +98,7 @@ class EchoHandler(http.server.BaseHTTPRequestHandler):
 def run_server(port: int = 3457) -> None:
     """Run the echo server."""
     with socketserver.TCPServer(("", port), EchoHandler) as httpd:
-        print(f"Echo server listening on port {port}")
+        print(f"Echo server listening on port {httpd.server_address[1]}", flush=True)
         httpd.serve_forever()
 
 
