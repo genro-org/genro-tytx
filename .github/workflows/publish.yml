@@ -1,9 +1,13 @@
 name: Publish
 
+# The bundle commit pushed by CI after each merge carries [skip ci], so a tag
+# on it does not trigger this workflow: run it by hand on the tag
+# (Actions → Publish → Run workflow → tag vX.Y.Z).
 on:
   push:
     tags:
       - "v*"
+  workflow_dispatch:
 
 jobs:
   build:
