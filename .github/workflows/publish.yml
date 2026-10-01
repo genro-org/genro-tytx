@@ -74,6 +74,8 @@ jobs:
 
       - name: Publish to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          skip-existing: true
 
   npm:
     # Trusted publishing (OIDC): configured on npmjs.com for genro-org/genro-tytx,
@@ -118,6 +120,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
+
+      - name: Install the npm dependencies the JSR publisher resolves
+        run: npm install --no-package-lock --ignore-scripts --no-audit --no-fund
 
       - name: Publish @genro/tytx
         run: |
