@@ -78,11 +78,11 @@ decoded = from_tytx(encoded)
 **JavaScript:**
 
 ```bash
-npm install genro-tytx big.js
+npm install @genrojs/tytx big.js
 ```
 
 ```javascript
-import { fetchTytx } from 'genro-tytx';
+import { fetchTytx } from '@genrojs/tytx';
 import Big from 'big.js';
 
 const result = await fetchTytx('/api/invoice', {
@@ -196,7 +196,7 @@ async def handle_order(request: Request):
 ### 3. ✅ WITH TYTX: Zero Conversions
 
 ```javascript
-import { fetchTytx } from 'genro-tytx';
+import { fetchTytx } from '@genrojs/tytx';
 
 const result = await fetchTytx('/api/process_order', { body: orderData });
 console.log(result.total.toFixed(2));  // Big, ready to use

@@ -6,11 +6,11 @@
   <a href="https://pypi.org/project/genro-tytx/"><img src="https://img.shields.io/pypi/v/genro-tytx?color=blue" alt="PyPI"></a>
   <a href="https://jsr.io/@genro/tytx"><img src="https://jsr.io/badges/@genro/tytx" alt="JSR"></a>
   <img src="https://img.shields.io/badge/python-3.10%2B-blue" alt="Python 3.10+">
-  <a href="https://github.com/genropy/genro-tytx/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-Apache%202.0-green" alt="License"></a>
+  <a href="https://github.com/genro-org/genro-tytx/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-Apache%202.0-green" alt="License"></a>
   <img src="https://img.shields.io/badge/status-beta-yellow" alt="Status">
   <br>
-  <a href="https://github.com/genropy/genro-tytx/actions/workflows/tests.yml"><img src="https://github.com/genropy/genro-tytx/actions/workflows/tests.yml/badge.svg" alt="Tests"></a>
-  <a href="https://codecov.io/gh/genropy/genro-tytx"><img src="https://codecov.io/gh/genropy/genro-tytx/branch/main/graph/badge.svg" alt="Coverage"></a>
+  <a href="https://github.com/genro-org/genro-tytx/actions/workflows/tests.yml"><img src="https://github.com/genro-org/genro-tytx/actions/workflows/tests.yml/badge.svg" alt="Tests"></a>
+  <a href="https://codecov.io/gh/genro-org/genro-tytx"><img src="https://codecov.io/gh/genro-org/genro-tytx/branch/main/graph/badge.svg" alt="Coverage"></a>
   <a href="https://genro-tytx.readthedocs.io/"><img src="https://readthedocs.org/projects/genro-tytx/badge/?version=latest" alt="Documentation"></a>
 </p>
 
@@ -88,7 +88,8 @@ decoded = from_tytx(encoded)
 **JavaScript:**
 
 ```bash
-bunx jsr add @genro/tytx
+npm install @genrojs/tytx   # npm
+bunx jsr add @genro/tytx    # JSR
 ```
 
 ```javascript
@@ -155,7 +156,10 @@ The concrete class of a subclass is the type's own business. TYTX keeps one subt
 # Python
 pip install genro-tytx
 
-# JavaScript/TypeScript
+# JavaScript/TypeScript, from npm
+npm install @genrojs/tytx
+
+# JavaScript/TypeScript, from JSR
 bunx jsr add @genro/tytx
 # With npm: npx jsr add @genro/tytx
 ```

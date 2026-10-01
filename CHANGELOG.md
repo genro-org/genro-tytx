@@ -3,6 +3,17 @@
 Notable changes to genro-tytx. Started at 0.12.2; earlier releases are
 documented by their git tags and commit history.
 
+## [0.16.1] - 2026-10-01
+
+### Changed
+
+- The JavaScript package is published on npm as `@genrojs/tytx`, alongside JSR
+  `@genro/tytx`. The unscoped npm package `genro-tytx` is deprecated.
+- `@xmldom/xmldom` is required at `^0.9.12`, the line genro-bag-js uses, instead
+  of `^0.8.10`. This closes the Dependabot alerts on 0.8.13, the version pinned
+  by `js/package-lock.json`.
+- Repository URLs point to `genro-org/genro-tytx`.
+
 ## [0.16.0] - 2026-09-26
 
 ### Changed

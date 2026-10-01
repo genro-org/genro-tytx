@@ -8,7 +8,7 @@
  * - Encoders/Decoders: JSON, XML, MessagePack
  *
  * Usage:
- *     import { toTytx, fromTytx, fetchTytx } from 'genro-tytx';
+ *     import { toTytx, fromTytx, fetchTytx } from '@genrojs/tytx';
  *     import Big from 'big.js';
  *
  *     // Encode
@@ -37,7 +37,7 @@ import { toTytx } from './encode.js';
 import { fromTytx } from './decode.js';
 import { fetchTytx, getTransport, CONTENT_TYPES } from './http.js';
 
-const __version__ = '0.16.0';
+const __version__ = '0.16.1';
 
 export {
     // Core API

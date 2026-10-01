@@ -1,7 +1,8 @@
 {
-  "name": "genro-tytx",
-  "version": "0.16.0",
-  "description": "TYTX - Typed Text Protocol for Scalar Types",
+  "name": "@genrojs/tytx",
+  "version": "0.16.1",
+  "private": true,
+  "description": "Typed data interchange between Python and JavaScript over JSON, XML and MessagePack: Decimal, dates and custom types arrive with their type.",
   "main": "src/index.js",
   "type": "module",
   "exports": {
@@ -28,14 +29,14 @@
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/nickvazz/genro-tytx"
+    "url": "https://github.com/genro-org/genro-tytx"
   },
   "devDependencies": {
     "esbuild": "^0.27.2"
   },
   "types": "./src/index.d.ts",
   "dependencies": {
-    "@xmldom/xmldom": "^0.8.10",
+    "@xmldom/xmldom": "^0.9.12",
     "big.js": "^6.2.1",
     "decimal.js": "^10.4.3",
     "@msgpack/msgpack": "^3.1.3"

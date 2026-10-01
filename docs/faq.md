@@ -87,7 +87,7 @@ headers = {"Content-Type": "application/vnd.tytx+json"}
 Yes, but you need to encode/decode manually:
 
 ```javascript
-import { toTytx, fromTytx } from 'genro-tytx';
+import { toTytx, fromTytx } from '@genrojs/tytx';
 import Big from 'big.js';
 
 const response = await fetch('/api/data', {
@@ -182,7 +182,7 @@ npm install @msgpack/msgpack
 ```
 
 ```javascript
-import { toMsgpack, fromMsgpack } from 'genro-tytx';
+import { toMsgpack, fromMsgpack } from '@genrojs/tytx';
 import Big from 'big.js';
 
 // Encode

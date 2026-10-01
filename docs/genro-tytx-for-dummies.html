@@ -373,7 +373,7 @@ pip install genro-tytx[msgpack]     <span class="cmt"># With MessagePack support
 pip install genro-tytx[all]         <span class="cmt"># Everything</span>
 
 <span class="cmt"># JavaScript (from GitHub)</span>
-npm install genropy/genro-tytx</code></pre>
+npm install @genrojs/tytx</code></pre>
 
 <h3>Encode &amp; Decode (Python)</h3>
 <pre><code><span class="kw">from</span> <span class="cls">decimal</span> <span class="kw">import</span> Decimal
@@ -395,7 +395,7 @@ result = <span class="fn">from_tytx</span>(wire)
 <span class="cmt"># {"product": "Widget", "price": Decimal("99.99"), "date": date(2025, 1, 15)}</span></code></pre>
 
 <h3>Encode &amp; Decode (JavaScript)</h3>
-<pre><code><span class="kw">import</span> { toTytx, fromTytx } <span class="kw">from</span> <span class="str">'genro-tytx'</span>;
+<pre><code><span class="kw">import</span> { toTytx, fromTytx } <span class="kw">from</span> <span class="str">'@genrojs/tytx'</span>;
 <span class="kw">import</span> { createDecimal, setDecimalLibrary } <span class="kw">from</span> <span class="str">'genro-tytx/src/registry.js'</span>;
 
 <span class="fn">setDecimalLibrary</span>(<span class="str">'big.js'</span>);
@@ -426,7 +426,7 @@ result = <span class="fn">from_tytx</span>(wire)
     <span class="cmt"># Send response...</span></code></pre>
 
 <h3>HTTP Integration (JavaScript)</h3>
-<pre><code><span class="kw">import</span> { fetchTytx } <span class="kw">from</span> <span class="str">'genro-tytx'</span>;
+<pre><code><span class="kw">import</span> { fetchTytx } <span class="kw">from</span> <span class="str">'@genrojs/tytx'</span>;
 
 <span class="kw">const</span> result = <span class="kw">await</span> <span class="fn">fetchTytx</span>(<span class="str">'/api/order'</span>, {
     body: { price: <span class="fn">createDecimal</span>(<span class="str">"99.99"</span>), qty: <span class="num">3</span> },
@@ -758,7 +758,7 @@ result = <span class="fn">from_msgpack</span>(packed)
 
 <h3>JavaScript: fetchTytx</h3>
 
-<pre><code><span class="kw">import</span> { fetchTytx } <span class="kw">from</span> <span class="str">'genro-tytx'</span>;
+<pre><code><span class="kw">import</span> { fetchTytx } <span class="kw">from</span> <span class="str">'@genrojs/tytx'</span>;
 
 <span class="cmt">// POST with automatic TYTX encoding</span>
 <span class="kw">const</span> result = <span class="kw">await</span> <span class="fn">fetchTytx</span>(<span class="str">'/api/order'</span>, {
@@ -967,7 +967,7 @@ result = <span class="fn">from_msgpack</span>(packed)
 </table>
 
 <div class="tab-footer">
-  <p>genro-tytx v0.9.0 &mdash; <a href="https://github.com/genropy/genro-tytx">GitHub</a> &mdash; <a href="https://pypi.org/project/genro-tytx/">PyPI</a></p>
+  <p>genro-tytx v0.9.0 &mdash; <a href="https://github.com/genro-org/genro-tytx">GitHub</a> &mdash; <a href="https://pypi.org/project/genro-tytx/">PyPI</a></p>
 </div>
 
 </div>

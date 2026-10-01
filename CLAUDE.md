@@ -33,7 +33,8 @@ Ogni modifica al codice deve essere accompagnata da test.
 
 ### Package Names
 - Python: `genro_tytx` (import from `genro_tytx`)
-- npm: `genro-tytx`
+- npm: `@genrojs/tytx`
+- JSR: `@genro/tytx`
 
 ---
 
