@@ -30,7 +30,7 @@ Decimal, Date
 Wrapper around `fetch()` with automatic type handling:
 
 ```javascript
-import { fetchTytx } from 'genro-tytx';
+import { fetchTytx } from '@genrojs/tytx';
 import Big from 'big.js';
 
 const result = await fetchTytx('/api/invoice', {
@@ -118,7 +118,7 @@ const time = new Date(Date.UTC(1970, 0, 1, 10, 30, 0));
 ### Client (JavaScript)
 
 ```javascript
-import { fetchTytx } from 'genro-tytx';
+import { fetchTytx } from '@genrojs/tytx';
 import Big from 'big.js';
 
 async function createOrder() {
@@ -145,7 +145,7 @@ TYTX encoding works anywhere you can send text:
 
 ```javascript
 // Client
-import { toTytx, fromTytx } from 'genro-tytx';
+import { toTytx, fromTytx } from '@genrojs/tytx';
 import Big from 'big.js';
 
 ws.send(toTytx({

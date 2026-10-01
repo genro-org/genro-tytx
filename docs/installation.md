@@ -1,11 +1,15 @@
 # Installation
 
-## JavaScript and TypeScript (JSR)
+## JavaScript and TypeScript
 
-Install `@genro/tytx` with `bunx jsr add @genro/tytx` or
-`npx jsr add @genro/tytx`. Import from `@genro/tytx`. The JavaScript
-package includes all Decimal, Big, MessagePack and XML dependencies.
-The optional-dependency instructions below apply to Python.
+The same package is published on two registries:
+
+- npm: `npm install @genrojs/tytx`, then import from `@genrojs/tytx`;
+- JSR: `bunx jsr add @genro/tytx` or `npx jsr add @genro/tytx`, then import
+  from `@genro/tytx`.
+
+The JavaScript package includes all Decimal, Big, MessagePack and XML
+dependencies. The optional-dependency instructions below apply to Python.
 
 ## Requirements
 
@@ -43,7 +47,7 @@ pip install genro-tytx[all]
 Clone the repository:
 
 ```bash
-git clone https://github.com/genropy/genro-tytx.git
+git clone https://github.com/genro-org/genro-tytx.git
 cd genro-tytx
 pip install -e ".[dev]"
 ```

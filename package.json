@@ -1,6 +1,6 @@
 {
-  "name": "genro-tytx",
-  "version": "0.16.0",
+  "name": "@genrojs/tytx",
+  "version": "0.16.1",
   "description": "TYTX - Typed Text Protocol for Scalar Types",
   "main": "js/src/index.js",
   "type": "module",
@@ -27,7 +27,7 @@
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/genropy/genro-tytx"
+    "url": "https://github.com/genro-org/genro-tytx"
   },
   "devDependencies": {
     "esbuild": "^0.27.2"
@@ -38,5 +38,15 @@
     "big.js": "^6.2.1",
     "decimal.js": "^10.4.3",
     "@msgpack/msgpack": "^3.1.3"
+  },
+  "files": [
+    "js/src/**/*.js",
+    "js/src/**/*.d.ts",
+    "README.md",
+    "LICENSE",
+    "NOTICE"
+  ],
+  "publishConfig": {
+    "access": "public"
   }
 }

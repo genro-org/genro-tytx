@@ -183,7 +183,7 @@ unpacked = from_msgpack(packed)
 Encode a JavaScript value to TYTX format.
 
 ```javascript
-import { toTytx } from 'genro-tytx';
+import { toTytx } from '@genrojs/tytx';
 import Big from 'big.js';
 
 // Object with typed values
@@ -209,7 +209,7 @@ toTytx(new Date(Date.UTC(2025, 0, 15)));
 **Query String Example:**
 
 ```javascript
-import { toTytx } from 'genro-tytx';
+import { toTytx } from '@genrojs/tytx';
 
 // Flat object → QS format
 toTytx({alfa: 33, date: new Date(Date.UTC(2025, 0, 15))}, null, {qs: true});
@@ -227,7 +227,7 @@ toTytx(['alfa', 'beta', 'gamma'], null, {qs: true});
 Decode TYTX data to JavaScript values.
 
 ```javascript
-import { fromTytx } from 'genro-tytx';
+import { fromTytx } from '@genrojs/tytx';
 
 // JSON with typed values
 fromTytx('{"price":"100.50::N"}::JS');
@@ -247,7 +247,7 @@ fromTytx('"2025-01-15::D"');
 Fetch wrapper with automatic TYTX encoding/decoding.
 
 ```javascript
-import { fetchTytx } from 'genro-tytx';
+import { fetchTytx } from '@genrojs/tytx';
 import Big from 'big.js';
 
 const result = await fetchTytx('/api/order', {
@@ -283,7 +283,7 @@ console.log(result.total.toFixed(2));
 Detect transport format from Content-Type header.
 
 ```javascript
-import { getTransport } from 'genro-tytx';
+import { getTransport } from '@genrojs/tytx';
 
 getTransport('application/json');           // 'json'
 getTransport('application/vnd.tytx+json');  // 'json'
@@ -322,7 +322,7 @@ getTransport('application/msgpack');        // 'msgpack'
 ### JavaScript: `CONTENT_TYPES`
 
 ```javascript
-import { CONTENT_TYPES } from 'genro-tytx';
+import { CONTENT_TYPES } from '@genrojs/tytx';
 
 CONTENT_TYPES.json;     // 'application/json'
 CONTENT_TYPES.xml;      // 'application/xml'

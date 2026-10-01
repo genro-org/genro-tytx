@@ -9,7 +9,7 @@ Get productive with TYTX in 5 minutes.
 pip install genro-tytx
 
 # JavaScript/TypeScript
-npm install genro-tytx
+npm install @genrojs/tytx
 
 # Recommended: decimal library for JS
 npm install big.js  # lightweight, good for most cases
@@ -49,7 +49,7 @@ The real power: types flow automatically between browser and server.
 ### Client (JavaScript)
 
 ```javascript
-import { fetchTytx } from 'genro-tytx';
+import { fetchTytx } from '@genrojs/tytx';
 import Big from 'big.js';
 
 const result = await fetchTytx('/api/order', {
@@ -69,7 +69,7 @@ console.log(result.ship_date);         // Date object
 ## 3. TypeScript with Types
 
 ```typescript
-import { fetchTytx } from 'genro-tytx';
+import { fetchTytx } from '@genrojs/tytx';
 import Big from 'big.js';
 
 interface OrderResponse {

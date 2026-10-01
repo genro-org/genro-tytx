@@ -7,13 +7,13 @@ TYTX eliminates manual type conversions between Python and JavaScript, and makes
 ## Installation
 
 ```bash
-npm install genro-tytx big.js
+npm install @genrojs/tytx big.js
 ```
 
 ## Quick Start
 
 ```javascript
-import { toTytx, fromTytx, setDecimalLibrary } from 'genro-tytx';
+import { toTytx, fromTytx, setDecimalLibrary } from '@genrojs/tytx';
 import Big from 'big.js';
 
 // Configure decimal library
@@ -52,7 +52,7 @@ const xmlEncoded = toTytx(data, 'xml');
 ## HTTP Client
 
 ```javascript
-import { fetchTytx } from 'genro-tytx';
+import { fetchTytx } from '@genrojs/tytx';
 
 // Fetch with automatic TYTX encoding/decoding
 const result = await fetchTytx('/api/data', {

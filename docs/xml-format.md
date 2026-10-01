@@ -153,7 +153,7 @@ from_xml('<item name="Widget" price="10::L" />')
 ## JavaScript/TypeScript
 
 ```javascript
-import { toXml, fromXml } from 'genro-tytx';
+import { toXml, fromXml } from '@genrojs/tytx';
 import Decimal from 'decimal.js';
 
 const data = {
