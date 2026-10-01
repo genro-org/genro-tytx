@@ -35,7 +35,7 @@
   },
   "types": "./src/index.d.ts",
   "dependencies": {
-    "@xmldom/xmldom": "^0.8.15",
+    "@xmldom/xmldom": "^0.9.12",
     "big.js": "^6.2.1",
     "decimal.js": "^10.4.3",
     "@msgpack/msgpack": "^3.1.3"
