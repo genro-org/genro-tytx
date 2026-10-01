@@ -1,7 +1,7 @@
 {
   "name": "@genrojs/tytx",
   "version": "0.16.1",
-  "description": "TYTX - Typed Text Protocol for Scalar Types",
+  "description": "Typed data interchange between Python and JavaScript over JSON, XML and MessagePack: Decimal, dates and custom types arrive with their type.",
   "main": "js/src/index.js",
   "type": "module",
   "exports": {
