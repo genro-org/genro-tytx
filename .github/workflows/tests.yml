@@ -75,6 +75,9 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     needs: [python-tests, js-tests]
+    # The job pushes the rebuilt bundle; genro-org gives GITHUB_TOKEN read-only access by default.
+    permissions:
+      contents: write
 
     steps:
       - uses: actions/checkout@v4
