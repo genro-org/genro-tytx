@@ -11444,7 +11444,7 @@ var TYTX = (() => {
   }
 
   // src/index.js
-  var __version__ = "0.16.1";
+  var __version__ = "0.16.2";
   return __toCommonJS(index_exports);
 })();
 /*! Bundled license information:
