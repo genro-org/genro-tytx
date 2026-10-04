@@ -3,6 +3,16 @@
 Notable changes to genro-tytx. Started at 0.12.2; earlier releases are
 documented by their git tags and commit history.
 
+## [0.16.2] - 2026-10-04
+
+### Changed
+
+- `js/src/index.d.ts` documents every exported symbol and member, with a module
+  doc. No type or runtime change.
+- The JSR job of the publish workflow installs the npm dependencies the JSR
+  publisher resolves, so the JSR version is published from the workflow with
+  provenance.
+
 ## [0.16.1] - 2026-10-01
 
 ### Changed
