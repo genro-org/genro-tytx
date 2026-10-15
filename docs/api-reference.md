@@ -19,7 +19,7 @@ from datetime import date
 
 # Dict with typed values → JSON string with ::JS suffix
 to_tytx({"price": Decimal("100.50")})
-# '{"price": "100.50::N"}::JS'
+# '{"price":"100.50::N"}::JS'
 
 # Scalar typed value → JSON string
 to_tytx(date(2025, 1, 15))
@@ -27,7 +27,7 @@ to_tytx(date(2025, 1, 15))
 
 # Plain dict (no typed values) → plain JSON
 to_tytx({"name": "test", "count": 42})
-# '{"name": "test", "count": 42}'
+# '{"name":"test","count":42}'
 ```
 
 **Parameters:**
@@ -66,7 +66,7 @@ Decode TYTX data to Python values.
 from genro_tytx import from_tytx
 
 # JSON with typed values
-from_tytx('{"price": "100.50::N"}::JS')
+from_tytx('{"price":"100.50::N"}::JS')
 # {"price": Decimal("100.50")}
 
 # Scalar typed value
@@ -74,7 +74,7 @@ from_tytx('"2025-01-15::D"')
 # date(2025, 1, 15)
 
 # Plain JSON
-from_tytx('{"name": "test"}')
+from_tytx('{"name":"test"}')
 # {"name": "test"}
 ```
 

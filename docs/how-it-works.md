@@ -9,7 +9,7 @@ Technical details of the TYTX wire format and encoding rules.
 TYTX encodes type information using `value::TYPE` suffixes:
 
 ```text
-{"price": "100.50::N", "date": "2025-01-15::D"}::JS
+{"price":"100.50::N","date":"2025-01-15::D"}::JS
 ```
 
 The `::JS` suffix marks the entire payload as TYTX-encoded JSON.
@@ -60,14 +60,14 @@ The `::JS` suffix marks the entire payload as TYTX-encoded JSON.
 3. **Objects/Arrays** containing special types get `::JS` suffix:
 
    ```text
-   {"price": Decimal("100.50")}  →  '{"price": "100.50::N"}::JS'
+   {"price": Decimal("100.50")}  →  '{"price":"100.50::N"}::JS'
    [Decimal("1"), Decimal("2")]  →  '["1::N", "2::N"]::JS'
    ```
 
 4. **Plain objects/arrays** (no special types) have no suffix:
 
    ```text
-   {"name": "Widget", "qty": 5}  →  '{"name": "Widget", "qty": 5}'
+   {"name": "Widget", "qty": 5}  →  '{"name":"Widget","qty":5}'
    ```
 
 ### DateTime Serialization
@@ -294,7 +294,7 @@ TYTX_DECIMAL_LIB=number      # Force native Number
 Decoders trim leading/trailing whitespace before processing:
 
 ```python
-from_tytx('  {"price": "100::N"}::JS  ')
+from_tytx('  {"price":"100::N"}::JS  ')
 # Works correctly
 ```
 
