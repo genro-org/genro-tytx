@@ -58,8 +58,8 @@ pip install -e ".[dev]"
 >>> from genro_tytx import to_tytx, from_tytx
 >>> from decimal import Decimal
 >>> to_tytx({"price": Decimal("100.50")})
-'{"price": "100.50::N"}::JS'
->>> from_tytx('{"price": "100.50::N"}::JS')
+'{"price":"100.50::N"}::JS'
+>>> from_tytx('{"price":"100.50::N"}::JS')
 {'price': Decimal('100.50')}
 ```
 

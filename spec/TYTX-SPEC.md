@@ -44,7 +44,7 @@ These suffixes indicate structured data formats:
 
 | Suffix | Type           | Format                  | Example                               |
 |--------|----------------|-------------------------|---------------------------------------|
-| `JS`   | JSON Structure | JSON with typed values  | `{"price": "100::N"}::JS`             |
+| `JS`   | JSON Structure | JSON with typed values  | `{"price":"100::N"}::JS`              |
 | `QS`   | Query String   | Key=value pairs or list | `alfa=33::L&date=2025-01-15::D::QS`   |
 
 ### 2.4 Deprecated Suffixes
@@ -129,7 +129,7 @@ hydrates it.
 When encoding a dict or list containing typed values, the entire JSON string is suffixed with `::JS`:
 
 ```
-{"price": "100.50::N", "date": "2025-01-15::D"}::JS
+{"price":"100.50::N","date":"2025-01-15::D"}::JS
 ```
 
 The `::JS` marker indicates:
@@ -554,7 +554,7 @@ The `::DH` type code is still supported in **deserialization** for backward comp
 ```python
 # Dict with typed values
 to_tytx({"price": Decimal("100.50")})
-# '{"price": "100.50::N"}::JS'
+# '{"price":"100.50::N"}::JS'
 
 # Scalar typed value
 to_tytx(date(2025, 1, 15))
@@ -562,7 +562,7 @@ to_tytx(date(2025, 1, 15))
 
 # Dict without typed values
 to_tytx({"name": "test", "count": 42})
-# '{"name": "test", "count": 42}'
+# '{"name":"test","count":42}'
 
 # Nested structure
 to_tytx({
@@ -574,14 +574,14 @@ to_tytx({
         ]
     }
 })
-# '{"invoice": {"total": "999.99::N", "items": [{"price": "100.00::N"}, {"price": "200.00::N"}]}}::JS'
+# '{"invoice":{"total":"999.99::N","items":[{"price":"100.00::N"},{"price":"200.00::N"}]}}::JS'
 ```
 
 ### 8.2 JSON Decoding Examples
 
 ```python
 # Dict with typed values
-from_tytx('{"price": "100.50::N"}::JS')
+from_tytx('{"price":"100.50::N"}::JS')
 # {"price": Decimal("100.50")}
 
 # Scalar typed value
@@ -589,7 +589,7 @@ from_tytx('"2025-01-15::D"')
 # date(2025, 1, 15)
 
 # Plain JSON (no typed values)
-from_tytx('{"name": "test"}')
+from_tytx('{"name":"test"}')
 # {"name": "test"}
 ```
 
@@ -680,7 +680,7 @@ POST /api/invoice HTTP/1.1
 Content-Type: application/vnd.tytx+json
 Accept: application/vnd.tytx+json
 
-{"total": "999.99::N", "date": "2025-01-15::D"}::JS
+{"total":"999.99::N","date":"2025-01-15::D"}::JS
 ```
 
 Note: The body is valid JSON (parseable by standard parsers), but contains TYTX type suffixes that require hydration.

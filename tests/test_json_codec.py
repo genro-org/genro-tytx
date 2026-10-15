@@ -2,12 +2,14 @@
 """Tests for the public untyped JSON codec (json_dumps / json_loads)."""
 
 import json
+from datetime import date
+from decimal import Decimal
 
 import pytest
 
 from genro_tytx import decode as decode_module
 from genro_tytx import encode as encode_module
-from genro_tytx import from_tytx, json_dumps, json_loads
+from genro_tytx import from_tytx, json_dumps, json_loads, to_tytx
 
 
 @pytest.fixture(params=[True, False], ids=["orjson", "stdlib"])
@@ -30,6 +32,14 @@ ROUNDTRIP_VALUES = [
     None,
     [],
     {},
+]
+
+TYPED_PARITY_VALUES = [
+    {"a": None, "b": [1, "è"]},
+    {"price": Decimal("1.5"), "day": date(2026, 1, 2), "name": "ü"},
+    [None, {"x": [None]}],
+    "è",
+    {"line_sep": "a\u2028b", "emoji": "😀"},
 ]
 
 
@@ -129,6 +139,21 @@ class TestEngineParity:
             fast = json_dumps(value)
             encode_module.USE_ORJSON = False
             fallback = json_dumps(value)
+        finally:
+            encode_module.USE_ORJSON = original
+        assert fast == fallback
+
+    @pytest.mark.skipif(not encode_module.HAS_ORJSON, reason="orjson not installed")
+    @pytest.mark.parametrize("value", ROUNDTRIP_VALUES + TYPED_PARITY_VALUES)
+    def test_to_tytx_identical_on_both_engines(self, value):
+        """to_tytx emits the same string with and without orjson (issue #60):
+        compact separators, non-ASCII characters left unescaped."""
+        original = encode_module.USE_ORJSON
+        try:
+            encode_module.USE_ORJSON = True
+            fast = to_tytx(value)
+            encode_module.USE_ORJSON = False
+            fallback = to_tytx(value)
         finally:
             encode_module.USE_ORJSON = original
         assert fast == fallback

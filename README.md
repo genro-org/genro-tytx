@@ -78,7 +78,7 @@ from genro_tytx import to_tytx, from_tytx
 # Encode
 data = {"price": Decimal("99.99"), "date": date(2025, 1, 15)}
 encoded = to_tytx(data)
-# '{"price": "99.99::N", "date": "2025-01-15::D"}::JS'
+# '{"price":"99.99::N","date":"2025-01-15::D"}::JS'
 
 # Decode
 decoded = from_tytx(encoded)

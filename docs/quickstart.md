@@ -34,7 +34,7 @@ data = {
 
 # Encode
 encoded = to_tytx(data)
-# '{"price": "99.99::N", "due_date": "2025-01-15::D", ...}::JS'
+# '{"price":"99.99::N","due_date":"2025-01-15::D",...}::JS'
 
 # Decode
 decoded = from_tytx(encoded)
