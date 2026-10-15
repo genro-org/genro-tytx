@@ -85,7 +85,8 @@ def _to_json(value: Any, force_suffix: bool = False) -> str:
             return f"{result}::JS"
         return result
     else:
-        encoder = _TYTXEncoder()
+        # Same bytes as orjson: compact separators, non-ASCII left unescaped.
+        encoder = _TYTXEncoder(separators=(",", ":"), ensure_ascii=False)
         result = encoder.encode(value)
         if encoder.has_special:
             return f"{result}::JS"
