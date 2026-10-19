@@ -26,6 +26,7 @@ test('browser bundle provides JSON and MessagePack registered-type codecs withou
     Root.prototype.toTytx = function toTytx() { return JSON.stringify(this.value); };
     Root.fromTytx = value => new Root(JSON.parse(value));
     source.registerClass(Root);
+    assert.strictEqual(source.getDateType(new Date(Date.UTC(2025, 0, 15))), 'D');
     for (const transport of ['json', 'msgpack']) {
         const decoded = source.fromTytx(source.toTytx(new Root({message: 'browser'}), transport), transport);
         assert.ok(decoded instanceof Root);

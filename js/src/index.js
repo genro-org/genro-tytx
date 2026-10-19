@@ -26,6 +26,7 @@ import {
     createDecimal,
     setDecimalLibrary,
     getDecimalLibrary,
+    getDateType,
     registerType,
     registerClass,
     getRegisteredType,
@@ -52,6 +53,8 @@ export {
     createDecimal,
     setDecimalLibrary,
     getDecimalLibrary,
+    // Date type detection
+    getDateType,
     // Custom type registration
     registerType,
     registerClass,
