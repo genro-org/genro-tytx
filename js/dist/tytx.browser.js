@@ -6523,6 +6523,7 @@ var TYTX = (() => {
     createDecimal: () => createDecimal,
     fetchTytx: () => fetchTytx,
     fromTytx: () => fromTytx,
+    getDateType: () => getDateType,
     getDecimalLibrary: () => getDecimalLibrary,
     getRegisteredType: () => getRegisteredType,
     getSubtypeDict: () => getSubtypeDict,
@@ -11444,7 +11445,7 @@ var TYTX = (() => {
   }
 
   // src/index.js
-  var __version__ = "0.16.2";
+  var __version__ = "0.16.3";
   return __toCommonJS(index_exports);
 })();
 /*! Bundled license information:
