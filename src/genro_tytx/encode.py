@@ -85,7 +85,8 @@ def _to_json(value: Any, force_suffix: bool = False) -> str:
             return f"{result}::JS"
         return result
     else:
-        encoder = _TYTXEncoder()
+        # Same bytes as orjson: compact separators, non-ASCII left unescaped.
+        encoder = _TYTXEncoder(separators=(",", ":"), ensure_ascii=False)
         result = encoder.encode(value)
         if encoder.has_special:
             return f"{result}::JS"
@@ -153,9 +154,9 @@ def to_tytx(
 
     Example:
         >>> to_tytx({"price": Decimal("100.50")})
-        '{"price": "100.50::N"}::JS'
+        '{"price":"100.50::N"}::JS'
         >>> to_tytx({"price": 100.50}, raw=True)
-        '{"price": 100.5}'
+        '{"price":100.5}'
         >>> to_tytx({"alfa": 33, "date": date(2025, 12, 14)}, qs=True)
         'alfa=33::L&date=2025-12-14::D::QS'
         >>> to_tytx({"root": {"value": Decimal("100")}}, transport="xml")

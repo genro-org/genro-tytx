@@ -114,7 +114,7 @@ def from_tytx(
         Python object with typed values hydrated, or None if data is None
 
     Example:
-        >>> from_tytx('{"price": "100.50::N"}::JS')
+        >>> from_tytx('{"price":"100.50::N"}::JS')
         {"price": Decimal("100.50")}
         >>> from_tytx('<root>100::N</root>', transport="xml")
         {"root": {"attrs": {}, "value": Decimal("100")}}

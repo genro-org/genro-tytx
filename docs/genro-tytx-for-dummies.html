@@ -388,7 +388,7 @@ order = {
 }
 
 wire = <span class="fn">to_tytx</span>(order)
-<span class="cmt"># '{"product": "Widget", "price": "99.99::N", "date": "2025-01-15::D"}::JS'</span>
+<span class="cmt"># '{"product":"Widget","price":"99.99::N","date":"2025-01-15::D"}::JS'</span>
 
 <span class="cmt"># Decode back &mdash; types are automatically restored</span>
 result = <span class="fn">from_tytx</span>(wire)
@@ -475,7 +475,7 @@ result = <span class="fn">from_tytx</span>(wire)
 <h3>Structure Markers</h3>
 <table>
   <tr><th>Suffix</th><th>Meaning</th><th>Example</th></tr>
-  <tr><td><code class="il">::JS</code></td><td>JSON structure with typed values</td><td><code class="il">{"price": "99.99::N"}::JS</code></td></tr>
+  <tr><td><code class="il">::JS</code></td><td>JSON structure with typed values</td><td><code class="il">{"price":"99.99::N"}::JS</code></td></tr>
   <tr><td><code class="il">::QS</code></td><td>Query string format</td><td><code class="il">price=99.99::N&amp;qty=3::L::QS</code></td></tr>
 </table>
 
@@ -514,11 +514,11 @@ result = <span class="fn">from_tytx</span>(wire)
 
 <span class="cmt"># Dict with typed values &rarr; ::JS suffix</span>
 <span class="fn">to_tytx</span>({<span class="str">"price"</span>: Decimal(<span class="str">"99.99"</span>), <span class="str">"date"</span>: date(<span class="num">2025</span>, <span class="num">1</span>, <span class="num">15</span>)})
-<span class="cmt"># '{"price": "99.99::N", "date": "2025-01-15::D"}::JS'</span>
+<span class="cmt"># '{"price":"99.99::N","date":"2025-01-15::D"}::JS'</span>
 
 <span class="cmt"># Dict with only native JSON types &rarr; no suffix</span>
 <span class="fn">to_tytx</span>({<span class="str">"name"</span>: <span class="str">"Widget"</span>, <span class="str">"count"</span>: <span class="num">42</span>})
-<span class="cmt"># '{"name": "Widget", "count": 42}'</span>
+<span class="cmt"># '{"name":"Widget","count":42}'</span>
 
 <span class="cmt"># Scalar typed value &rarr; quoted with suffix, no ::JS</span>
 <span class="fn">to_tytx</span>(Decimal(<span class="str">"100.50"</span>))
@@ -533,7 +533,7 @@ result = <span class="fn">from_tytx</span>(wire)
 <pre><code><span class="kw">from</span> <span class="cls">genro_tytx</span> <span class="kw">import</span> from_tytx
 
 <span class="cmt"># TYTX structure &rarr; types restored</span>
-<span class="fn">from_tytx</span>(<span class="str">'{"price": "99.99::N", "date": "2025-01-15::D"}::JS'</span>)
+<span class="fn">from_tytx</span>(<span class="str">'{"price":"99.99::N","date":"2025-01-15::D"}::JS'</span>)
 <span class="cmt"># {"price": Decimal("99.99"), "date": date(2025, 1, 15)}</span>
 
 <span class="cmt"># Scalar with suffix</span>
@@ -541,7 +541,7 @@ result = <span class="fn">from_tytx</span>(wire)
 <span class="cmt"># Decimal("100.50")</span>
 
 <span class="cmt"># Plain JSON (no TYTX suffixes) &rarr; parsed as standard JSON</span>
-<span class="fn">from_tytx</span>(<span class="str">'{"name": "Widget", "count": 42}'</span>)
+<span class="fn">from_tytx</span>(<span class="str">'{"name":"Widget","count":42}'</span>)
 <span class="cmt"># {"name": "Widget", "count": 42}</span></code></pre>
 
 <h3>With explicit transport</h3>
