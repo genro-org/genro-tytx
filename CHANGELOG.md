@@ -3,6 +3,20 @@
 Notable changes to genro-tytx. Started at 0.12.2; earlier releases are
 documented by their git tags and commit history.
 
+## [0.16.3] - 2026-10-19
+
+### Fixed
+
+- Python `to_tytx` with the JSON transport emits the same string with and
+  without `orjson` (#60). The stdlib fallback now uses compact separators and
+  leaves non-ASCII characters unescaped, as `orjson` does. Code that compared
+  the spaced output of the fallback must expect the compact form.
+
+### Added
+
+- JS: `getDateType` is exported from the package entry point and declared in
+  `index.d.ts` (#62). No behaviour change.
+
 ## [0.16.2] - 2026-10-04
 
 ### Changed
