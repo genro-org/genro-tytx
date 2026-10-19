@@ -6,7 +6,7 @@
 import { test, describe, afterEach } from 'node:test';
 import assert from 'node:assert';
 
-import { toTytx, fromTytx } from '../src/index.js';
+import { toTytx, fromTytx, getDateType } from '../src/index.js';
 import {
     registerType,
     registerClass,
@@ -410,4 +410,19 @@ describe('subtype dictionary', () => {
         setSubtypeDict('XB', { Branch });
         assert.strictEqual(toTytx({ b: new Branch({ a: '1' }) }), before);
     });
+});
+
+describe('getDateType from the entry point', () => {
+    const cases = [
+        ['date', new Date(Date.UTC(2025, 0, 15)), 'D'],
+        ['time', new Date(Date.UTC(1970, 0, 1, 10, 30)), 'H'],
+        ['datetime', new Date(Date.UTC(2025, 0, 15, 10, 30)), 'DHZ'],
+        ['epoch midnight', new Date(Date.UTC(1970, 0, 1)), 'DHZ'],
+    ];
+    for (const [label, value, expected] of cases) {
+        test(`${label} is typed ${expected}, as toTytx encodes it`, () => {
+            assert.strictEqual(getDateType(value), expected);
+            assert.strictEqual(toTytx(value).split('::').pop(), expected);
+        });
+    }
 });

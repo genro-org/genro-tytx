@@ -63,6 +63,9 @@ export function setDecimalLibrary(name: DecimalLibrary): void;
 /** Returns the name of the decimal library currently in use. */
 export function getDecimalLibrary(): DecimalLibrary;
 
+/** TYTX type of a Date: 'H' on 1970-01-01 not at midnight UTC, 'D' at midnight UTC on any other day, otherwise 'DHZ'. */
+export function getDateType(d: Date): 'D' | 'H' | 'DHZ';
+
 /**
  * Register a class under a TYTX suffix, with explicit encoder and decoder.
  * Re-registering the same class replaces its hooks.
