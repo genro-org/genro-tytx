@@ -34,8 +34,8 @@ import {
     getSubtypeDict,
 } from './registry.js';
 
-import { toTytx } from './encode.js';
-import { fromTytx } from './decode.js';
+import { toTytx, toTytxIter } from './encode.js';
+import { fromTytx, fromTytxIter } from './decode.js';
 import { fetchTytx, getTransport, CONTENT_TYPES } from './http.js';
 
 const __version__ = '0.16.3';
@@ -44,6 +44,9 @@ export {
     // Core API
     toTytx,
     fromTytx,
+    // Iterables of objects (one record at a time)
+    toTytxIter,
+    fromTytxIter,
     // HTTP utilities
     fetchTytx,
     getTransport,

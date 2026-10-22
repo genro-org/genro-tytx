@@ -117,8 +117,34 @@ function fromTytx(data, transport = null) {
     }
 }
 
+/**
+ * Decode an iterable of already parsed objects, one record at a time.
+ *
+ * Every string ending with a registered "::SUFFIX" becomes its typed value;
+ * everything else passes unchanged. A sync source gives an iterator, an async
+ * source (with Symbol.asyncIterator) an async iterator.
+ *
+ * @param {Iterable<any>|AsyncIterable<any>} records
+ * @returns {Iterator<any>|AsyncIterator<any>}
+ *
+ * @example
+ * [...fromTytxIter([{ price: '12.5::N' }])]
+ * // [{ price: Decimal('12.5') }]
+ */
+function fromTytxIter(records) {
+    if (Symbol.asyncIterator in records) {
+        return (async function* decodeAsync() {
+            for await (const record of records) yield walk(record, _decodeItem, isString);
+        })();
+    }
+    return (function* decode() {
+        for (const record of records) yield walk(record, _decodeItem, isString);
+    })();
+}
+
 export {
     fromTytx,
+    fromTytxIter,
     TYTX_MARKER,
     isString,
     _fromJson,

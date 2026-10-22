@@ -8,8 +8,10 @@ Supports multiple transports: json, xml, msgpack.
 from __future__ import annotations
 
 import json
+from collections.abc import AsyncIterable, AsyncIterator, Iterable, Iterator
 from typing import Any, Literal
 
+from .registry import get_type_entry
 from .utils import raw_encode
 
 # Check for orjson availability
@@ -191,3 +193,42 @@ def to_tytx(
         return _to_msgpack(value)
     else:
         raise ValueError(f"Unknown transport: {transport}")
+
+
+def _encode_value(value: Any) -> Any:
+    """Return value with every non-JSON-native typed value as a "serialized::SUFFIX" string.
+
+    A registered type wins over the container check, as in the JSON serializer:
+    a registered dict or list subclass is encoded by its own serializer.
+    """
+    entry = get_type_entry(value)
+    if entry is not None:
+        suffix, serializer, json_native = entry
+        return value if json_native else f"{serializer(value)}::{suffix}"
+    if isinstance(value, dict):
+        return {k: _encode_value(v) for k, v in value.items()}
+    if isinstance(value, (list, tuple)):
+        return [_encode_value(item) for item in value]
+    return value
+
+
+async def _encode_async(records: AsyncIterable[Any]) -> AsyncIterator[Any]:
+    async for record in records:
+        yield _encode_value(record)
+
+
+def to_tytx_iter(records: Iterable[Any] | AsyncIterable[Any]) -> Iterator[Any] | AsyncIterator[Any]:
+    """Encode an iterable of objects, one record at a time.
+
+    Each record comes out as plain JSON data: typed values become
+    "serialized::SUFFIX" strings, with no "::JS" marker, so any JSON or JSONL
+    writer can serialize it. A sync source gives an iterator, an async source
+    (with __aiter__) an async iterator.
+
+    Example:
+        >>> list(to_tytx_iter([{"price": Decimal("12.50")}]))
+        [{'price': '12.50::N'}]
+    """
+    if isinstance(records, AsyncIterable):
+        return _encode_async(records)
+    return (_encode_value(record) for record in records)

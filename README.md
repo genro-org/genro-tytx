@@ -115,6 +115,25 @@ json_loads('{"a": 1}')      # accepts str or bytes -> {"a": 1}
 
 `json_dumps` returns UTF-8 `bytes` (ready for ASGI/WebSocket send), `json_loads` accepts `str` or `bytes`. Use these when you want plain JSON; use `to_tytx` / `from_tytx` when you want typed values to flow.
 
+## Streams of records (JSON Lines)
+
+`to_tytx_iter` / `from_tytx_iter` (JavaScript `toTytxIter` / `fromTytxIter`) take an iterable of objects and give back an iterator, one record at a time, so a selection is never held in memory as a whole. Encoding turns typed values into `"value::CODE"` strings with no `::JS` marker: each record is plain JSON, one JSONL line. Decoding turns those strings back into typed values and leaves everything else unchanged. A sync source gives an iterator, an async source an async iterator. Splitting the stream into lines belongs to the JSONL reader or writer.
+
+```python
+from genro_tytx import to_tytx_iter, from_tytx_iter
+
+for record in to_tytx_iter(rows):                  # rows: dicts with Decimal, date, ...
+    out.write(json.dumps(record) + "\n")           # {"price": "12.50::N", "day": "2026-10-22::D"}
+
+for record in from_tytx_iter(json.loads(line) for line in open("orders.jsonl")):
+    ...                                            # record["price"] is a Decimal
+
+async for record in from_tytx_iter(async_records): # async source -> async iterator
+    ...
+```
+
+Over HTTP the stream is sent as `Content-Type: application/jsonl` with `X-TYTX-Transport: jsonl`; `getTransport` returns `'jsonl'` for it. A response that ends early looks like a complete one: reporting errors after the headers, or the expected number of records, is up to the application.
+
 ## Custom types
 
 `register_type` lets an external package teach TYTX a new type — a serialize hook (object → string) and a deserialize hook (string → object) under a custom suffix. The package registers at its own import time, so TYTX gains no dependency on it:
