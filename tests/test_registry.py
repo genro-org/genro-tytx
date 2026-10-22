@@ -10,6 +10,7 @@ from genro_tytx import (
     from_tytx,
     get_subtype_dict,
     register_class,
+    register_subtype,
     register_type,
     set_subtype_dict,
     to_tytx,
@@ -515,3 +516,41 @@ class TestSubtypeDict:
         before = to_tytx({"b": Branch({"a": "1"})})
         set_subtype_dict("XB", {"Branch": Branch})
         assert to_tytx({"b": Branch({"a": "1"})}) == before
+
+
+class TestRegisterSubtype:
+    """register_subtype adds one class to the subtype dictionary of a suffix."""
+
+    def test_default_name_is_the_class_name(self, clean_registry):
+        register_subtype("XB", SourceBranch)
+        assert get_subtype_dict("XB") == {"SourceBranch": SourceBranch}
+
+    def test_explicit_name(self, clean_registry):
+        register_subtype("XB", SourceBranch, name="Source")
+        assert get_subtype_dict("XB") == {"Source": SourceBranch}
+
+    def test_keeps_the_existing_entries(self, clean_registry):
+        set_subtype_dict("XB", {"Branch": Branch})
+        register_subtype("XB", SourceBranch)
+        assert get_subtype_dict("XB") == {"Branch": Branch, "SourceBranch": SourceBranch}
+
+    def test_same_class_same_name_is_accepted(self, clean_registry):
+        register_subtype("XB", SourceBranch)
+        register_subtype("XB", SourceBranch)
+        assert get_subtype_dict("XB") == {"SourceBranch": SourceBranch}
+
+    def test_name_owned_by_another_class_raises(self, clean_registry):
+        register_subtype("XB", Branch)
+        with pytest.raises(ValueError, match="'Branch' is already registered"):
+            register_subtype("XB", Point, name="Branch")
+        assert get_subtype_dict("XB") == {"Branch": Branch}
+
+    def test_dicts_are_per_suffix(self, clean_registry):
+        register_subtype("XB", Branch)
+        register_subtype("XSB", Point, name="Branch")
+        assert get_subtype_dict("XB") == {"Branch": Branch}
+        assert get_subtype_dict("XSB") == {"Branch": Point}
+
+    def test_suffix_need_not_be_registered(self, clean_registry):
+        register_subtype("NOTREGISTERED", Branch)
+        assert get_subtype_dict("NOTREGISTERED") == {"Branch": Branch}

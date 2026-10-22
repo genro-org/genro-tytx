@@ -92,7 +92,11 @@ registered under a code already owned by another class.
 `setSubtypeDict` / `getSubtypeDict`). TYTX never reads it and checks nothing.
 The type that owns the code decides its content and uses it in its own
 serializer and deserializer to carry the concrete class. Whoever adds a
-subclass reads the dictionary, adds its entries and sets it again. For `X`,
+subclass calls `register_subtype(suffix, cls, name=None)` (JavaScript:
+`registerSubtype(suffix, cls, name)`): it adds `cls` under `name`, by default
+the class name, identical in both languages. Registering the same class under
+the same name again is accepted; a name owned by another class is an error.
+Each language registers its own class; the two meet on the name. For `X`,
 genro-bag maps the symbolic class name (`Bag`, `SourceBag`, ...) to the class
 and writes it in the Bag payload as `__cls`; the value syntax does not change.
 

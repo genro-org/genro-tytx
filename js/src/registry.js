@@ -388,8 +388,7 @@ function registerClass(cls) {
  * Store the subtype dictionary of a suffix, replacing the previous one.
  *
  * Nothing is checked: the suffix need not be registered and the content is up
- * to the type that owns the suffix. To extend it, read it with getSubtypeDict,
- * add the entries and set it again.
+ * to the type that owns the suffix. To add one class, use registerSubtype.
  *
  * @param {string} suffix
  * @param {Object} subtypes
@@ -406,6 +405,28 @@ function setSubtypeDict(suffix, subtypes) {
  */
 function getSubtypeDict(suffix) {
     return SUBTYPE_DICTS.has(suffix) ? SUBTYPE_DICTS.get(suffix) : {};
+}
+
+/**
+ * Add one class to the subtype dictionary of a suffix.
+ *
+ * The name defaults to the class name, identical in Python and JavaScript:
+ * the wire carries only the name. Registering the same class under the same
+ * name again is accepted; a name owned by another class throws. The suffix
+ * need not be registered.
+ *
+ * @param {string} suffix
+ * @param {Function} cls
+ * @param {string} [name] - defaults to cls.name
+ */
+function registerSubtype(suffix, cls, name = cls.name) {
+    const subtypes = getSubtypeDict(suffix);
+    if ((subtypes[name] ?? cls) !== cls) {
+        throw new Error(
+            `TYTX subtype name '${name}' is already registered for suffix '${suffix}' by ${subtypes[name].name}`,
+        );
+    }
+    setSubtypeDict(suffix, { ...subtypes, [name]: cls });
 }
 
 /**
@@ -439,6 +460,7 @@ export {
     registerClass,
     setSubtypeDict,
     getSubtypeDict,
+    registerSubtype,
     _resetCustomTypes,
     // Serializers (exported for testing)
     _serializeDecimal,

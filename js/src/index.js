@@ -32,6 +32,7 @@ import {
     getRegisteredType,
     setSubtypeDict,
     getSubtypeDict,
+    registerSubtype,
 } from './registry.js';
 
 import { toTytx } from './encode.js';
@@ -61,6 +62,7 @@ export {
     getRegisteredType,
     setSubtypeDict,
     getSubtypeDict,
+    registerSubtype,
     // Version
     __version__,
 };
