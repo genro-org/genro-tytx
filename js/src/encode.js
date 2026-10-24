@@ -156,7 +156,34 @@ function toTytx(value, transport = null, { raw = false, qs = false, _forceSuffix
     }
 }
 
+/**
+ * Encode an iterable of objects, one record at a time.
+ *
+ * Each record comes out as plain JSON data: typed values become
+ * "serialized::SUFFIX" strings, with no "::JS" marker, so any JSON or JSONL
+ * writer can serialize it. A sync source gives an iterator, an async source
+ * (with Symbol.asyncIterator) an async iterator.
+ *
+ * @param {Iterable<any>|AsyncIterable<any>} records
+ * @returns {Iterator<any>|AsyncIterator<any>}
+ *
+ * @example
+ * [...toTytxIter([{ price: createDecimal('12.5') }])]
+ * // [{ price: '12.5::N' }]
+ */
+function toTytxIter(records) {
+    if (Symbol.asyncIterator in records) {
+        return (async function* encodeAsync() {
+            for await (const record of records) yield _preprocessValue(record)[0];
+        })();
+    }
+    return (function* encode() {
+        for (const record of records) yield _preprocessValue(record)[0];
+    })();
+}
+
 export {
     toTytx,
+    toTytxIter,
     _toJson,
 };

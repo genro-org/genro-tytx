@@ -549,7 +549,41 @@ The `::DH` type code is still supported in **deserialization** for backward comp
 | Function | Description |
 |----------|-------------|
 | `fetchTytx(url, options)` | Fetch wrapper with TYTX encoding/decoding |
-| `getTransport(contentType)` | Detect transport from Content-Type header |
+| `getTransport(contentType)` | Detect transport from Content-Type header; `'jsonl'` for JSON Lines (§7.4), checked before `'json'` |
+
+### 7.4 Iterables of Records (JSON Lines)
+
+| Function | Input | Output |
+|----------|-------|--------|
+| `to_tytx_iter(records)` | Iterable of objects | Iterator of JSON-ready objects |
+| `from_tytx_iter(records)` | Iterable of parsed objects | Iterator of typed objects |
+
+JavaScript: `toTytxIter` / `fromTytxIter`. A sync source gives an iterator; an
+async source (`__aiter__` in Python, `Symbol.asyncIterator` in JavaScript)
+gives an async iterator. Records are processed one at a time.
+
+**Encoding.** Every value that is not JSON-native becomes `"serialized::CODE"`,
+at any depth inside objects and lists, as in §3.3. A registered type is
+matched before the object/list check. No `::JS` marker is added: each record
+is plain JSON.
+
+**Decoding.** Every string ending with a registered `::CODE` becomes its typed
+value, as in §3.5. Everything else passes unchanged, including strings with an
+unknown code.
+
+**TYTX Lines.** A stream of records is JSON Lines: UTF-8, one encoded record
+per line, separated by `\n`. JSON escapes newlines inside strings, so a record
+never spans lines. Any JSONL reader can read it; typed values then remain
+strings. Splitting into lines, CRLF, chunk boundaries and malformed lines are
+the JSONL reader's and writer's concern, not TYTX's.
+
+Over HTTP: `Content-Type: application/jsonl` plus `X-TYTX-Transport: jsonl`.
+`application/jsonl` is in common use but is not in the IANA registry.
+
+**Completeness.** A stream that stops early looks like a complete one, and the
+status is sent before the first record. TYTX adds no metadata records to the
+stream: reporting errors after the headers, or the expected record count, is
+the application's concern.
 
 ## 8. Examples
 

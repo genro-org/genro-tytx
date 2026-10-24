@@ -17,11 +17,13 @@ const CONTENT_TYPES = {
 /**
  * Get transport from Content-Type header.
  * @param {string} contentType
- * @returns {'json'|'xml'|'msgpack'|null}
+ * @returns {'jsonl'|'json'|'xml'|'msgpack'|null}
  */
 function getTransport(contentType) {
     if (!contentType) return null;
     const ct = contentType.toLowerCase();
+    // JSON Lines first: its media type contains "json" too.
+    if (ct.includes('jsonl')) return 'jsonl';
     if (ct.includes('json')) return 'json';
     if (ct.includes('xml')) return 'xml';
     if (ct.includes('msgpack')) return 'msgpack';

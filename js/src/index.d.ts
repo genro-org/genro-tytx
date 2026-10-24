@@ -29,6 +29,14 @@ export function toTytx(value: unknown, transport?: Transport, options?: EncodeOp
 /** Decode typed text, XML or MessagePack. Registered decoders determine the result. */
 export function fromTytx(data: string | Uint8Array | null, transport?: Transport): unknown;
 
+/** Encode an iterable of objects one record at a time: typed values become "serialized::SUFFIX" strings, with no "::JS" marker. An async source gives an async iterator. */
+export function toTytxIter(records: Iterable<unknown>): IterableIterator<unknown>;
+export function toTytxIter(records: AsyncIterable<unknown>): AsyncIterableIterator<unknown>;
+
+/** Decode an iterable of already parsed objects one record at a time: strings ending with a registered "::SUFFIX" become typed values. An async source gives an async iterator. */
+export function fromTytxIter(records: Iterable<unknown>): IterableIterator<unknown>;
+export function fromTytxIter(records: AsyncIterable<unknown>): AsyncIterableIterator<unknown>;
+
 /** Options accepted by {@link fetchTytx}: standard fetch options plus TYTX ones. */
 export interface FetchOptions extends Omit<RequestInit, 'body' | 'headers'> {
     /** Data to send, serialized with {@link toTytx}. Without it the method defaults to GET, with it to POST. */
@@ -45,8 +53,8 @@ export interface FetchOptions extends Omit<RequestInit, 'body' | 'headers'> {
  */
 export function fetchTytx(url: string, options?: FetchOptions): Promise<unknown>;
 
-/** Map a Content-Type header value to its transport, or null when it is not recognized. */
-export function getTransport(contentType: string | null | undefined): Transport;
+/** Map a Content-Type header value to its transport, or null when it is not recognized. 'jsonl' marks JSON Lines, read with a JSONL reader and {@link fromTytxIter}. */
+export function getTransport(contentType: string | null | undefined): Transport | 'jsonl';
 
 /** Content-Type header value of each non-null transport. */
 export const CONTENT_TYPES: { json: string; xml: string; msgpack: string };

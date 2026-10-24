@@ -8,6 +8,7 @@ Supports multiple transports: json, xml, msgpack.
 from __future__ import annotations
 
 import json
+from collections.abc import AsyncIterable, AsyncIterator, Iterable, Iterator
 from typing import Any, Literal, cast
 
 from .utils import raw_decode, walk
@@ -133,3 +134,24 @@ def from_tytx(
         return _from_msgpack(cast(bytes, data))
     else:
         raise ValueError(f"Unknown transport: {transport}")
+
+
+async def _decode_async(records: AsyncIterable[Any]) -> AsyncIterator[Any]:
+    async for record in records:
+        yield walk(record, _decode_item, is_string)
+
+
+def from_tytx_iter(records: Iterable[Any] | AsyncIterable[Any]) -> Iterator[Any] | AsyncIterator[Any]:
+    """Decode an iterable of already parsed objects, one record at a time.
+
+    Every string ending with a registered "::SUFFIX" becomes its typed value;
+    everything else passes unchanged. A sync source gives an iterator, an
+    async source (with __aiter__) an async iterator.
+
+    Example:
+        >>> list(from_tytx_iter([{"price": "12.50::N"}]))
+        [{'price': Decimal('12.50')}]
+    """
+    if isinstance(records, AsyncIterable):
+        return _decode_async(records)
+    return (walk(record, _decode_item, is_string) for record in records)

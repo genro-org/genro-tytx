@@ -19,8 +19,8 @@ Usage:
     # {"price": Decimal("100.50"), "date": date(2025, 1, 15)}
 """
 
-from .decode import from_tytx, json_loads
-from .encode import json_dumps, to_tytx
+from .decode import from_tytx, from_tytx_iter, json_loads
+from .encode import json_dumps, to_tytx, to_tytx_iter
 from .msgpack import from_msgpack, to_msgpack
 from .qs import from_qs, to_qs
 from .registry import (
@@ -41,6 +41,9 @@ __all__ = [
     # Unified API
     "to_tytx",
     "from_tytx",
+    # Iterables of objects (one record at a time)
+    "to_tytx_iter",
+    "from_tytx_iter",
     # Untyped JSON codec
     "json_dumps",
     "json_loads",
