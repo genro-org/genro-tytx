@@ -39,7 +39,7 @@ import { toTytx, toTytxIter } from './encode.js';
 import { fromTytx, fromTytxIter } from './decode.js';
 import { fetchTytx, getTransport, CONTENT_TYPES } from './http.js';
 
-const __version__ = '0.16.3';
+const __version__ = '0.16.4';
 
 export {
     // Core API

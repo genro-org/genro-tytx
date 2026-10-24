@@ -3,6 +3,24 @@
 Notable changes to genro-tytx. Started at 0.12.2; earlier releases are
 documented by their git tags and commit history.
 
+## [0.16.4] - 2026-10-24
+
+### Added
+
+- `register_subtype(suffix, cls, name=None)` (JS `registerSubtype`) adds one
+  class to the subtype dictionary of a suffix, under its class name or `name`
+  (#67, #68). A name already owned by another class raises `ValueError`
+  (JS: throws); registering the same class under the same name again is
+  accepted.
+- `to_tytx_iter` / `from_tytx_iter` (JS `toTytxIter` / `fromTytxIter`) encode
+  and decode an iterable of records one at a time, sync or async (#66, #69).
+  Encoded records are plain JSON with `"value::CODE"` strings and no `::JS`
+  marker, one JSON Lines line each. Spec §7.4 describes TYTX Lines.
+- JS: `getTransport` returns `'jsonl'` for `application/jsonl`, checked before
+  `'json'` (#69). `fetchTytx` does not decode JSON Lines responses: it throws
+  `Unknown transport: jsonl`; read them with a JSONL reader and
+  `fromTytxIter`.
+
 ## [0.16.3] - 2026-10-19
 
 ### Fixed
