@@ -6523,6 +6523,7 @@ var TYTX = (() => {
     createDecimal: () => createDecimal,
     fetchTytx: () => fetchTytx,
     fromTytx: () => fromTytx,
+    fromTytxIter: () => fromTytxIter,
     getDateType: () => getDateType,
     getDecimalLibrary: () => getDecimalLibrary,
     getRegisteredType: () => getRegisteredType,
@@ -6530,10 +6531,12 @@ var TYTX = (() => {
     getTransport: () => getTransport,
     isDecimal: () => isDecimal2,
     registerClass: () => registerClass,
+    registerSubtype: () => registerSubtype,
     registerType: () => registerType,
     setDecimalLibrary: () => setDecimalLibrary,
     setSubtypeDict: () => setSubtypeDict,
-    toTytx: () => toTytx
+    toTytx: () => toTytx,
+    toTytxIter: () => toTytxIter
   });
 
   // node_modules/decimal.js/decimal.mjs
@@ -10950,6 +10953,16 @@ var TYTX = (() => {
       throw new Error(`Unknown transport: ${transport}`);
     }
   }
+  function toTytxIter(records) {
+    if (Symbol.asyncIterator in records) {
+      return (async function* encodeAsync() {
+        for await (const record of records) yield _preprocessValue(record)[0];
+      })();
+    }
+    return (function* encode2() {
+      for (const record of records) yield _preprocessValue(record)[0];
+    })();
+  }
 
   // src/xml.js
   var DOMParser2;
@@ -11118,6 +11131,16 @@ var TYTX = (() => {
     } else {
       throw new Error(`Unknown transport: ${transport}`);
     }
+  }
+  function fromTytxIter(records) {
+    if (Symbol.asyncIterator in records) {
+      return (async function* decodeAsync2() {
+        for await (const record of records) yield walk(record, _decodeItem, isString);
+      })();
+    }
+    return (function* decode2() {
+      for (const record of records) yield walk(record, _decodeItem, isString);
+    })();
   }
 
   // src/qs.js
@@ -11385,6 +11408,15 @@ var TYTX = (() => {
   function getSubtypeDict(suffix) {
     return SUBTYPE_DICTS.has(suffix) ? SUBTYPE_DICTS.get(suffix) : {};
   }
+  function registerSubtype(suffix, cls, name = cls.name) {
+    const subtypes = getSubtypeDict(suffix);
+    if ((subtypes[name] ?? cls) !== cls) {
+      throw new Error(
+        `TYTX subtype name '${name}' is already registered for suffix '${suffix}' by ${subtypes[name].name}`
+      );
+    }
+    setSubtypeDict(suffix, { ...subtypes, [name]: cls });
+  }
 
   // src/http.js
   var CONTENT_TYPES = {
@@ -11395,6 +11427,7 @@ var TYTX = (() => {
   function getTransport(contentType) {
     if (!contentType) return null;
     const ct = contentType.toLowerCase();
+    if (ct.includes("jsonl")) return "jsonl";
     if (ct.includes("json")) return "json";
     if (ct.includes("xml")) return "xml";
     if (ct.includes("msgpack")) return "msgpack";
