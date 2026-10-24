@@ -199,8 +199,8 @@ def set_subtype_dict(suffix: str, subtypes: dict[str, Any]) -> None:
     """Store the subtype dictionary of a suffix, replacing the previous one.
 
     Nothing is checked: the suffix need not be registered and the content is
-    up to the type that owns the suffix. To extend it, read it with
-    get_subtype_dict, add the entries and set it again.
+    up to the type that owns the suffix. To add one class, use
+    register_subtype.
     """
     SUBTYPE_DICTS[suffix] = subtypes
 
@@ -208,6 +208,24 @@ def set_subtype_dict(suffix: str, subtypes: dict[str, Any]) -> None:
 def get_subtype_dict(suffix: str) -> dict[str, Any]:
     """Return the subtype dictionary stored for a suffix, or {} if none was set."""
     return SUBTYPE_DICTS.get(suffix, {})
+
+
+def register_subtype(suffix: str, cls: type, name: str | None = None) -> None:
+    """Add one class to the subtype dictionary of a suffix.
+
+    The name defaults to the class name, identical in Python and JavaScript:
+    the wire carries only the name. Registering the same class under the same
+    name again is accepted; a name owned by another class raises ValueError.
+    The suffix need not be registered.
+    """
+    subtype_name = cls.__name__ if name is None else name
+    subtypes = get_subtype_dict(suffix)
+    if subtypes.get(subtype_name, cls) is not cls:
+        raise ValueError(
+            f"TYTX subtype name '{subtype_name}' is already registered "
+            f"for suffix '{suffix}' by {subtypes[subtype_name].__name__}"
+        )
+    set_subtype_dict(suffix, {**subtypes, subtype_name: cls})
 
 
 def register_type(

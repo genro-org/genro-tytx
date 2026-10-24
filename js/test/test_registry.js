@@ -6,7 +6,7 @@
 import { test, describe, afterEach } from 'node:test';
 import assert from 'node:assert';
 
-import { toTytx, fromTytx, getDateType } from '../src/index.js';
+import { toTytx, fromTytx, getDateType, registerSubtype } from '../src/index.js';
 import {
     registerType,
     registerClass,
@@ -409,6 +409,53 @@ describe('subtype dictionary', () => {
         const before = toTytx({ b: new Branch({ a: '1' }) });
         setSubtypeDict('XB', { Branch });
         assert.strictEqual(toTytx({ b: new Branch({ a: '1' }) }), before);
+    });
+});
+
+describe('registerSubtype', () => {
+    // Adds one class to the subtype dictionary of a suffix.
+    afterEach(() => _resetCustomTypes());
+
+    class Point2 {}
+
+    test('default name is the class name', () => {
+        registerSubtype('XB', SourceBranch);
+        assert.deepStrictEqual(getSubtypeDict('XB'), { SourceBranch });
+    });
+
+    test('explicit name', () => {
+        registerSubtype('XB', SourceBranch, 'Source');
+        assert.deepStrictEqual(getSubtypeDict('XB'), { Source: SourceBranch });
+    });
+
+    test('keeps the existing entries', () => {
+        setSubtypeDict('XB', { Branch });
+        registerSubtype('XB', SourceBranch);
+        assert.deepStrictEqual(getSubtypeDict('XB'), { Branch, SourceBranch });
+    });
+
+    test('same class under the same name is accepted', () => {
+        registerSubtype('XB', SourceBranch);
+        registerSubtype('XB', SourceBranch);
+        assert.deepStrictEqual(getSubtypeDict('XB'), { SourceBranch });
+    });
+
+    test('a name owned by another class throws', () => {
+        registerSubtype('XB', Branch);
+        assert.throws(() => registerSubtype('XB', Point2, 'Branch'), /'Branch' is already registered/);
+        assert.deepStrictEqual(getSubtypeDict('XB'), { Branch });
+    });
+
+    test('dictionaries are per suffix', () => {
+        registerSubtype('XB', Branch);
+        registerSubtype('XSB', Point2, 'Branch');
+        assert.deepStrictEqual(getSubtypeDict('XB'), { Branch });
+        assert.deepStrictEqual(getSubtypeDict('XSB'), { Branch: Point2 });
+    });
+
+    test('the suffix need not be registered', () => {
+        registerSubtype('NOTREGISTERED', Branch);
+        assert.deepStrictEqual(getSubtypeDict('NOTREGISTERED'), { Branch });
     });
 });
 

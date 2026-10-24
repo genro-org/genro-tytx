@@ -105,5 +105,8 @@ export function setSubtypeDict(suffix: string, subtypes: Record<string, unknown>
 /** Returns the subtype dictionary of a suffix, or {} if none was set. */
 export function getSubtypeDict(suffix: string): Record<string, unknown>;
 
+/** Adds one class to the subtype dictionary of a suffix, under name (default: the class name). Throws if the name is owned by another class. */
+export function registerSubtype(suffix: string, cls: Function, name?: string): void;
+
 /** Version of the package. */
 export const __version__: string;

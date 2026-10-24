@@ -29,6 +29,7 @@ from .registry import (
     TYPE_REGISTRY,
     get_subtype_dict,
     register_class,
+    register_subtype,
     register_type,
     set_subtype_dict,
 )
@@ -58,6 +59,7 @@ __all__ = [
     "register_class",
     "set_subtype_dict",
     "get_subtype_dict",
+    "register_subtype",
     # Version
     "__version__",
 ]

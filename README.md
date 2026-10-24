@@ -148,7 +148,7 @@ class Point:
     def from_tytx(cls, s): return cls(*map(int, s.split(",")))
 ```
 
-The concrete class of a subclass is the type's own business. TYTX keeps one subtype dictionary per code and never reads it: `set_subtype_dict(suffix, dict)` replaces it, `get_subtype_dict(suffix)` returns it (`{}` if none was set). JavaScript: `setSubtypeDict` / `getSubtypeDict`. The type's `to_tytx`/`from_tytx` use it; whoever adds a subclass reads the dictionary, adds its entries and sets it again. genro-bag maps symbolic names to Bag classes this way.
+The concrete class of a subclass is the type's own business. TYTX keeps one subtype dictionary per code and never reads it: `set_subtype_dict(suffix, dict)` replaces it, `get_subtype_dict(suffix)` returns it (`{}` if none was set). JavaScript: `setSubtypeDict` / `getSubtypeDict`. The type's `to_tytx`/`from_tytx` use it; whoever adds a subclass calls `register_subtype(suffix, cls, name=None)` (JavaScript `registerSubtype`), which adds the class under its own name, or under `name`, and raises if the name already belongs to another class. genro-bag maps symbolic names to Bag classes this way.
 
 ## Installation
 
