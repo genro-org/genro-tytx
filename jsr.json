@@ -1,6 +1,6 @@
 {
   "name": "@genro/tytx",
-  "version": "0.16.3",
+  "version": "0.16.4",
   "license": "Apache-2.0",
   "exports": "./js/src/index.js",
   "publish": {
